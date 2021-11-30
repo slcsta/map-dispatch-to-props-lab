@@ -1,3 +1,8 @@
+// write a mapDispatchToProps() function
+// it will allow us to pass dispatched actions as props
+// the action provided in actions/restaurants.js is a function 
+// that must be called in order to return the action object
+
 import React, { Component } from 'react';
 import { addRestaurant } from '../actions/restaurants';
 import { connect } from 'react-redux';
@@ -23,6 +28,8 @@ export class RestaurantInput extends Component {
 
   handleOnSubmit = event => {
     event.preventDefault();
+    console.log("Restaurant being added: ", this.state.name);
+    this.props.addRestaurant(this.state)
     // add missing code
   }
 
@@ -49,6 +56,13 @@ export class RestaurantInput extends Component {
   }
 };
 
+const mapDispatchToProps = dispatch => {
+  return {
+    addRestaurant: (restaurant) => {
+      dispatch(addRestaurant(restaurant))
+    }
+  }
+}
 
 //connect this component by wrapping RestaurantInput below
-export default RestaurantInput
+export default connect(null, mapDispatchToProps)(RestaurantInput);
